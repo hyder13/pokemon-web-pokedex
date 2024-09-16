@@ -105,6 +105,7 @@
             font-size: 1.2em;
             vertical-align: middle;
         }
+        
         @media (max-width: 600px) {
             .main-title {
                 font-size: 1.8em;
@@ -116,6 +117,29 @@
                 width: 100%;
             }
         }
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .nav-button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;  /* 移除底線 */
+        }
+
+        .nav-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            text-decoration: none;  /* 確保懸停時也不顯示底線 */
+        }
+                
     </style>
 </head>
 <body>

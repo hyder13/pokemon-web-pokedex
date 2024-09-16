@@ -131,10 +131,16 @@ function displayPokemon(pokemon) {
             console.warn('未找到 mainTitle 元素');
         }
         
+        const currentIndex = pokemonDatabase.findIndex(p => p.id === pokemon.id);
+        const prevPokemon = currentIndex > 0 ? pokemonDatabase[currentIndex - 1] : null;
+        const nextPokemon = currentIndex < pokemonDatabase.length - 1 ? pokemonDatabase[currentIndex + 1] : null;
+        
         document.getElementById('result').innerHTML = `
-            <a href="#" class="back-button" onclick="returnToList(); return false;">
-                <span style="margin-right: 5px;">&#8592;</span> 返回首頁
-            </a>
+            <div class="navigation-buttons">
+                <a href="#" class="nav-button" onclick="returnToList(); return false;">返回首頁</a>
+                ${prevPokemon ? `<a href="#" class="nav-button" onclick="displayPokemon(pokemonDatabase.find(p => p.id === '${prevPokemon.id}')); return false;">上一頁</a>` : ''}
+                ${nextPokemon ? `<a href="#" class="nav-button" onclick="displayPokemon(pokemonDatabase.find(p => p.id === '${nextPokemon.id}')); return false;">下一頁</a>` : ''}
+            </div>
             <div class="pokemon-detail">
                 <h2>${pokemon.name.zh} (${pokemon.name.en}) <span class="speak-icon" data-text="${pokemon.name.zh}">🔊</span></h2>
                 <img src="${pokemon.image}" alt="${pokemon.name.zh}" style="max-width:100%; height:auto;">
