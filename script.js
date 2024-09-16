@@ -119,7 +119,9 @@ async function loadData() {
 function displayPokemon(pokemon) {
     if (pokemon) {
         const types = Array.isArray(pokemon.types.zh) ? pokemon.types.zh.join('、') : '未知';
-        const entries = Array.isArray(pokemon.entries.zh) ? pokemon.entries.zh.map(entry => `<li>${entry}</li>`).join('') : '無可用說明';
+        const entries = Array.isArray(pokemon.entries.zh) ? pokemon.entries.zh.map((entry, index) => 
+            `<li>${entry} <span class="speak-icon" data-text="${entry}">🔊</span></li>`
+        ).join('') : '無可用說明';
         
         // 隱藏主標題（添加檢查）
         const mainTitle = document.getElementById('mainTitle');
