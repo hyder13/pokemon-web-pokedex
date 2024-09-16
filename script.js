@@ -122,15 +122,17 @@ function displayPokemon(pokemon) {
         const entries = Array.isArray(pokemon.entries.zh) ? pokemon.entries.zh.map(entry => `<li>${entry}</li>`).join('') : '无可用说明';
         
         document.getElementById('result').innerHTML = `
-            <h2>${pokemon.name.zh} (${pokemon.name.en}) <span class="speak-icon" data-text="${pokemon.name.zh}">🔊</span></h2>
-            <p>编号: ${pokemon.id}</p>
-            <p>属性: ${types} <span class="speak-icon" data-text="${types}">🔊</span></p>
-            <p>分类: ${pokemon.genera.zh} <span class="speak-icon" data-text="${pokemon.genera.zh}">🔊</span></p>
-            <p>个性: ${pokemon.personality} <span class="speak-icon" data-text="${pokemon.personality}">🔊</span></p>
-            <p>喜欢: ${pokemon.likes} <span class="speak-icon" data-text="${pokemon.likes}">🔊</span></p>
-            <img src="${pokemon.image}" alt="${pokemon.name.zh}" style="width:220px; height:220px;">
-            <h3>说明：</h3>
-            <ul>${entries}</ul>
+            <div class="pokemon-detail">
+                <h2>${pokemon.name.zh} (${pokemon.name.en}) <span class="speak-icon" data-text="${pokemon.name.zh}">🔊</span></h2>
+                <img src="${pokemon.image}" alt="${pokemon.name.zh}" style="max-width:100%; height:auto;">
+                <p>编号: ${pokemon.id}</p>
+                <p>属性: ${types} <span class="speak-icon" data-text="${types}">🔊</span></p>
+                <p>分类: ${pokemon.genera.zh} <span class="speak-icon" data-text="${pokemon.genera.zh}">🔊</span></p>
+                <p>个性: ${pokemon.personality} <span class="speak-icon" data-text="${pokemon.personality}">🔊</span></p>
+                <p>喜欢: ${pokemon.likes} <span class="speak-icon" data-text="${pokemon.likes}">🔊</span></p>
+                <h3>说明：</h3>
+                <ul>${entries}</ul>
+            </div>
         `;
 
         document.querySelectorAll('.speak-icon').forEach(icon => {
@@ -160,7 +162,9 @@ function displayPokemonList(pokemonList) {
         ${pokemonList.map(pokemon => `
             <div class="pokemon-item" data-id="${pokemon.id}">
                 <img src="${pokemon.image}" alt="${pokemon.name.zh}">
-                <span>${pokemon.name.zh} (${pokemon.name.en}) - ${pokemon.id}</span>
+                <p>${pokemon.name.zh}</p>
+                <p>(${pokemon.name.en})</p>
+                <p>#${pokemon.id}</p>
             </div>
         `).join('')}
     </div>`;
