@@ -1,30 +1,30 @@
 const pokemonJsonData = Array.from({ length: 905 }, (_, i) => ({
     id: i + 1,
-    name: { en: `Pokemon ${i + 1}`, zh: `宝可梦 ${i + 1}` },
+    name: { en: `Pokemon ${i + 1}`, zh: `寶可夢 ${i + 1}` },
     types: { en: ["Normal"], zh: ["一般"] },
-    genera: { en: "Normal Pokémon", zh: "一般宝可梦" },
+    genera: { en: "Normal Pokémon", zh: "一般寶可夢" },
     entries: {
         en: ["This is a normal Pokémon."],
-        zh: ["这是一只普通的宝可梦。"]
+        zh: ["這是一隻普通的寶可夢。"]
     }
 }));
 
-// 创建一个包含多种个性和喜好的数组
-const personalities = ['活泼', '温顺', '勇敢', '胆小', '冷静', '急躁', '开朗', '内向', '调皮', '认真'];
+// 創建一個包含多種個性和喜好的數組
+const personalities = ['活潑', '溫順', '勇敢', '膽小', '冷靜', '急躁', '開朗', '內向', '調皮', '認真'];
 const likes = [
-    '喜欢在阳光下晒太阳',
-    '喜欢在雨中玩耍',
-    '喜欢吃树果',
-    '喜欢和训练家一起冒险',
-    '喜欢在草地上奔跑',
-    '喜欢在水中游泳',
-    '喜欢收集闪亮的东西',
-    '喜欢和其他宝可梦玩耍',
-    '喜欢睡懒觉',
-    '喜欢挑战强大的对手'
+    '喜歡在陽光下曬太陽',
+    '喜歡在雨中玩耍',
+    '喜歡吃樹果',
+    '喜歡和訓練家一起冒險',
+    '喜歡在草地上奔跑',
+    '喜歡在水中游泳',
+    '喜歡收集閃亮的東西',
+    '喜歡和其他寶可夢玩耍',
+    '喜歡睡懶覺',
+    '喜歡挑戰強大的對手'
 ];
 
-// 生成模拟的 CSV 数据
+// 生成模擬的 CSV 數據
 const csvData = `id,name,personality1,personality2,likes
 ${pokemonJsonData.map(pokemon => {
     const p1 = personalities[Math.floor(Math.random() * personalities.length)];
@@ -36,34 +36,34 @@ ${pokemonJsonData.map(pokemon => {
 let allPokemon = [];
 let pokemonDatabase = [];
 
-// 异步加载数据
+// 異步加載數據
 async function loadData() {
     try {
         let pokemonJsonData;
         try {
-            // 尝试加载外部JSON文件，使用正确的文件名 PokeApi.json
+            // 嘗試加載外部JSON文件，使用正確的文件名 PokeApi.json
             const pokemonResponse = await fetch('PokeApi.json');
             pokemonJsonData = await pokemonResponse.json();
         } catch (error) {
-            console.warn('无法加载外部JSON文件，使用模拟数据', error);
-            // 使用模拟数据
+            console.warn('無法加載外部JSON文件，使用模擬數據', error);
+            // 使用模擬數據
             pokemonJsonData = Array.from({ length: 905 }, (_, i) => ({
                 id: i + 1,
-                name: { en: `Pokemon ${i + 1}`, zh: `宝可梦 ${i + 1}` },
+                name: { en: `Pokemon ${i + 1}`, zh: `寶可夢 ${i + 1}` },
                 types: { en: ["Normal"], zh: ["一般"] },
-                genera: { en: "Normal Pokémon", zh: "一般宝可梦" },
+                genera: { en: "Normal Pokémon", zh: "一般寶可夢" },
                 entries: {
                     en: ["This is a normal Pokémon."],
-                    zh: ["这是一只普通的宝可梦。"]
+                    zh: ["這是一隻普通的寶可夢。"]
                 }
             }));
         }
-        console.log('pokemonJsonData 长度:', pokemonJsonData.length);
+        console.log('pokemonJsonData 長度:', pokemonJsonData.length);
 
-        // 使用之前生成的模拟CSV数据，而不是尝试加载外部CSV文件
-        console.log('csvData 长度:', csvData.trim().split('\n').length);
+        // 使用之前生成的模擬CSV數據，而不是嘗試加載外部CSV文件
+        console.log('csvData 長度:', csvData.trim().split('\n').length);
 
-        // 处理CSV数据
+        // 處理CSV數據
         const personalityDatabase = {};
         csvData.trim().split('\n').slice(1).forEach((line, index) => {
             line = line.trim();
@@ -82,11 +82,11 @@ async function loadData() {
             }
         });
 
-        console.log('处理后的 personalityDatabase:', Object.keys(personalityDatabase).length);
+        console.log('處理後的 personalityDatabase:', Object.keys(personalityDatabase).length);
 
         pokemonDatabase = pokemonJsonData.map(pokemon => {
             if (!pokemon || typeof pokemon !== 'object') {
-                console.error('无效的宝可梦数据:', pokemon);
+                console.error('無效的寶可夢數據:', pokemon);
                 return null;
             }
             const id = pokemon.id.toString();
@@ -102,35 +102,46 @@ async function loadData() {
             };
         }).filter(pokemon => pokemon !== null);
 
-        console.log('处理后的 pokemonDatabase 长度:', pokemonDatabase.length);
-        console.log('第一只宝可梦:', pokemonDatabase[0]);
-        console.log('最后一只宝可梦:', pokemonDatabase[pokemonDatabase.length - 1]);
+        console.log('處理後的 pokemonDatabase 長度:', pokemonDatabase.length);
+        console.log('第一隻寶可夢:', pokemonDatabase[0]);
+        console.log('最後一隻寶可夢:', pokemonDatabase[pokemonDatabase.length - 1]);
 
         allPokemon = pokemonDatabase;
-        console.log('数据加载完成，总共有', allPokemon.length, '只宝可梦');
+        console.log('數據加載完成，總共有', allPokemon.length, '隻寶可夢');
         initializeTypeFilter();
         displayPokemonList(allPokemon);
     } catch (error) {
-        console.error('加载数据时出错:', error);
+        console.error('加載數據時出錯:', error);
         console.error(error.stack);
     }
 }
 
 function displayPokemon(pokemon) {
     if (pokemon) {
-        const types = Array.isArray(pokemon.types.zh) ? pokemon.types.zh.join(', ') : '未知';
-        const entries = Array.isArray(pokemon.entries.zh) ? pokemon.entries.zh.map(entry => `<li>${entry}</li>`).join('') : '无可用说明';
+        const types = Array.isArray(pokemon.types.zh) ? pokemon.types.zh.join('、') : '未知';
+        const entries = Array.isArray(pokemon.entries.zh) ? pokemon.entries.zh.map(entry => `<li>${entry}</li>`).join('') : '無可用說明';
+        
+        // 隱藏主標題（添加檢查）
+        const mainTitle = document.getElementById('mainTitle');
+        if (mainTitle) {
+            mainTitle.style.display = 'none';
+        } else {
+            console.warn('未找到 mainTitle 元素');
+        }
         
         document.getElementById('result').innerHTML = `
+            <a href="#" class="back-button" onclick="returnToList(); return false;">
+                <span style="margin-right: 5px;">&#8592;</span> 返回首頁
+            </a>
             <div class="pokemon-detail">
                 <h2>${pokemon.name.zh} (${pokemon.name.en}) <span class="speak-icon" data-text="${pokemon.name.zh}">🔊</span></h2>
                 <img src="${pokemon.image}" alt="${pokemon.name.zh}" style="max-width:100%; height:auto;">
-                <p>编号: ${pokemon.id}</p>
-                <p>属性: ${types} <span class="speak-icon" data-text="${types}">🔊</span></p>
-                <p>分类: ${pokemon.genera.zh} <span class="speak-icon" data-text="${pokemon.genera.zh}">🔊</span></p>
-                <p>个性: ${pokemon.personality} <span class="speak-icon" data-text="${pokemon.personality}">🔊</span></p>
-                <p>喜欢: ${pokemon.likes} <span class="speak-icon" data-text="${pokemon.likes}">🔊</span></p>
-                <h3>说明：</h3>
+                <p><strong>編號:</strong> ${pokemon.id}</p>
+                <p><strong>屬性:</strong> ${types} <span class="speak-icon" data-text="${types}">🔊</span></p>
+                <p><strong>分類:</strong> ${pokemon.genera.zh} <span class="speak-icon" data-text="${pokemon.genera.zh}">🔊</span></p>
+                <p><strong>個性:</strong> ${pokemon.personality} <span class="speak-icon" data-text="${pokemon.personality}">🔊</span></p>
+                <p><strong>喜歡:</strong> ${pokemon.likes} <span class="speak-icon" data-text="${pokemon.likes}">🔊</span></p>
+                <h3>說明：</h3>
                 <ul>${entries}</ul>
             </div>
         `;
@@ -141,7 +152,7 @@ function displayPokemon(pokemon) {
             });
         });
     } else {
-        document.getElementById('result').innerHTML = '未找到该宝可梦';
+        document.getElementById('result').innerHTML = '未找到該寶可夢';
     }
 }
 
@@ -152,12 +163,22 @@ function speak(text) {
 }
 
 function displayPokemonList(pokemonList) {
-    console.log('正在显示宝可梦列表，列表长度:', pokemonList.length);
+    console.log('正在顯示寶可夢列表，列表長度:', pokemonList.length);
     const resultDiv = document.getElementById('result');
     if (!resultDiv) {
         console.error('未找到 result 元素');
         return;
     }
+    
+    // 顯示主標題（添加檢查）
+    const mainTitle = document.getElementById('mainTitle');
+    if (mainTitle) {
+        mainTitle.style.display = 'block';
+    } else {
+        console.warn('未找到 mainTitle 元素');
+    }
+    
+    // 其餘代碼保持不變
     resultDiv.innerHTML = `<div class="pokemon-list">
         ${pokemonList.map(pokemon => `
             <div class="pokemon-item" data-id="${pokemon.id}">
@@ -176,7 +197,7 @@ function displayPokemonList(pokemonList) {
             displayPokemon(pokemon);
         });
     });
-    console.log('宝可梦列表显示完成');
+    console.log('寶可夢列表顯示完成');
 }
 
 function initializeTypeFilter() {
@@ -197,10 +218,10 @@ document.getElementById('searchButton').addEventListener('click', () => {
     let result;
 
     if (/^\d+$/.test(searchInput)) {
-        // 如果输入是纯数字，按ID搜索
+        // 如果輸入是純數字，按ID搜索
         result = pokemonDatabase.find(pokemon => pokemon.id === searchInput);
     } else {
-        // 否则按名称搜索
+        // 否則按名稱搜索
         result = pokemonDatabase.find(pokemon => 
             (pokemon.name.zh && pokemon.name.zh.toLowerCase() === searchInput.toLowerCase()) ||
             (pokemon.name.en && pokemon.name.en.toLowerCase() === searchInput.toLowerCase())
@@ -210,7 +231,7 @@ document.getElementById('searchButton').addEventListener('click', () => {
     if (result) {
         displayPokemon(result);
     } else {
-        document.getElementById('result').innerHTML = '未找到该宝可梦';
+        document.getElementById('result').innerHTML = '未找到該寶可夢';
     }
 });
 
@@ -226,18 +247,23 @@ document.getElementById('typeFilter').addEventListener('change', (event) => {
     }
 });
 
+// 添加新的函數來處理返回列表
+function returnToList() {
+    displayPokemonList(allPokemon);
+}
+
 // 初始化
-console.log('开始加载数据');
+console.log('開始加載數據');
 loadData();
 
-// 确保在页面加载完成后显示所有宝可梦
+// 確保在頁面加載完成後顯示所有寶可夢
 window.addEventListener('load', () => {
-    console.log('页面加载完成');
+    console.log('頁面加載完成');
     if (allPokemon.length > 0) {
-        console.log('正在显示所有宝可梦');
+        console.log('正在顯示所有寶可夢');
         displayPokemonList(allPokemon);
     } else {
-        console.log('allPokemon 为空，重新加载数据');
+        console.log('allPokemon 為空，重新加載數據');
         loadData();
     }
 });
