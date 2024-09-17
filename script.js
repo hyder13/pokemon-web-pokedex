@@ -164,9 +164,35 @@ function displayPokemon(pokemon) {
     }
 }
 
+let voices = [];
+
+function loadVoices() {
+    voices = speechSynthesis.getVoices();
+    const voiceSelect = document.getElementById('voiceSelect');
+    voiceSelect.innerHTML = '';
+    voices.forEach((voice, i) => {
+        if (voice.lang.startsWith('zh')) {  // 只顯示中文語音
+            const option = document.createElement('option');
+            option.textContent = `${voice.name} (${voice.lang})`;
+            option.setAttribute('data-lang', voice.lang);
+            option.setAttribute('data-name', voice.name);
+            voiceSelect.appendChild(option);
+        }
+    });
+}
+
+// 確保在頁面加載時和聲音列表更新時都調用loadVoices
+speechSynthesis.onvoiceschanged = loadVoices;
+
 function speak(text) {
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'zh-CN';
+    const voiceSelect = document.getElementById('voiceSelect');
+    const selectedOption = voiceSelect.selectedOptions[0];
+    if (selectedOption) {
+        const selectedName = selectedOption.getAttribute('data-name');
+        utterance.voice = voices.find(voice => voice.name === selectedName);
+    }
+    utterance.lang = 'zh-TW';  // 設置語言為繁體中文
     speechSynthesis.speak(utterance);
 }
 
